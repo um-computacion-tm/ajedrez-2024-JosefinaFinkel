@@ -4,7 +4,9 @@ class Piece:
 
 
 class Rook(Piece):
-  ...
+  def __init__(self, color):
+       super().__init__(color)
+
 
 class Pawn(Piece):
    ...
