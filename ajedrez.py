@@ -8,7 +8,8 @@ def main():
 
 def play(chess):
     try:
-        print(chess.show_board())
+        #print(chess.show_board())
+        print("turn:", chess.turn)
         from_row = int(input('From row: '))
         from_col = int(input('From col: '))
         to_row = int(input('To row: '))
@@ -21,4 +22,3 @@ def play(chess):
 
 if __name__ == '__main__':
     main()
-#
