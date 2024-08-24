@@ -18,7 +18,8 @@ class Bishop(Piece):
        super().__init__(color)
        
 class Knight(Piece):
-  ...
+   def __init__(self, color):
+       super().__init__(color)
         
 class Queen(Piece):
    ...  
