@@ -1,30 +1,16 @@
-class Piece:
-     def __init__(self, color):
-            self.__color__ = color
-
-
+from piece import Piece
 class Rook(Piece):
-  def __init__(self, color):
-       super().__init__(color)
-
-
-class Pawn(Piece):
-   def __init__(self, color):
-       super().__init__(color)
-
-        
-class Bishop(Piece):
-   def __init__(self, color):
-       super().__init__(color)
-       
-class Knight(Piece):
-   def __init__(self, color):
-       super().__init__(color)
-        
-class Queen(Piece):
-   ...  
-        
-class King(Piece):
-   ...
-
-
+    white_str_ = "♖"
+    black_str = "♜"
+    
+    def possible_positions_vd(self, row, col):
+        possibles = []
+        for next_row in range(row + 1, 8):
+            possibles.append((next_row, col))
+        return possibles
+    
+    def possible_positions_va(self, row, col):
+        possibles = []
+        for next_row in range(row - 1, -1, -1):
+            possibles.append((next_row, col))
+        return possibles
