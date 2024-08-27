@@ -1,5 +1,4 @@
-from rook import Rook
-
+from piece import Piece
 
 class Board:
     def __init__(self):
@@ -11,10 +10,11 @@ class Board:
             self.__positions__.append(col) # Agrega la columna al tablero 
 
         # Coloca las torres en sus posiciones iniciales
-        self.__positions__[0][0] = Rook("BLACK") # Black
-        self.__positions__[0][7] = Rook("BLACK") # Black
-        self.__positions__[7][7] = Rook("WHITE") # White
-        self.__positions__[7][0] = Rook("WHITE") # White
+        self.__positions__[0][0] = Piece("BLACK", self) # Black
+        self.__positions__[0][7] = Piece("BLACK", self) # Black
+        self.__positions__[7][7] = Piece("WHITE", self) # White
+        self.__positions__[7][0] = Piece("WHITE", self) # White
+    
 
     def __str__(self):
         board_str = ""
@@ -38,7 +38,7 @@ class Board:
 
 import unittest
 from board import Board
-from rook import Rook
+from piece import Piece
 
 class TestBoard(unittest.TestCase):
     def setUp(self):
@@ -54,10 +54,11 @@ class TestBoard(unittest.TestCase):
 
     def test_initial_rook_positions(self):
         """ Verifica que las torres están en las posiciones correctas. """
-        self.assertIsInstance(self.board.get_piece(0, 0), Rook)
-        self.assertIsInstance(self.board.get_piece(0, 7), Rook)
-        self.assertIsInstance(self.board.get_piece(7, 0), Rook)
-        self.assertIsInstance(self.board.get_piece(7, 7), Rook)
+        self.assertIsInstance(self.board.get_piece(0, 0), Piece)
+        self.assertIsInstance(self.board.get_piece(0, 7), Piece)
+        self.assertIsInstance(self.board.get_piece(7, 0), Piece)
+        self.assertIsInstance(self.board.get_piece(7, 7), Piece)
+
         
         # Verifica que las torres tienen el color correcto
         self.assertEqual(self.board.get_piece(0, 0).color, "BLACK")
