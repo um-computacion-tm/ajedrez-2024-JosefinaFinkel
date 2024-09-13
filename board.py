@@ -89,3 +89,71 @@ class TestBoard(unittest.TestCase):
                 "♜      ♜\n"
             )
         )
+        from rook import Rook  # Se asume que hay una clase Rook
+from piece import Piece  # Clase base para las piezas
+
+class Board:
+    def __init__(self):
+        self.__positions__ = []  # Inicializa el tablero vacío
+        for _ in range(8):
+            col = []  # Crea una columna vacía
+            for _ in range(8):
+                col.append(None)  # Agrega 8 espacios vacíos (None) a la columna
+            self.__positions__.append(col)  # Agrega la columna al tablero
+
+        # Coloca las torres (Rooks) en sus posiciones iniciales
+        self.__positions__[0][0] = Rook("BLACK", self)
+        self.__positions__[0][7] = Rook("BLACK", self)
+        self.__positions__[7][0] = Rook("WHITE", self)
+        self.__positions__[7][7] = Rook("WHITE", self)
+
+    def __str__(self):
+        board_str = ""
+        for row in self.__positions__:
+            for cell in row:
+                if cell is not None:
+                    board_str += str(cell) + " "
+                else:
+                    board_str += ". "  # Representa un espacio vacío con un punto
+            board_str += "\n"
+        return board_str
+
+    def get_piece(self, row, col):
+        if 0 <= row < 8 and 0 <= col < 8:
+            return self.__positions__[row][col]
+        else:
+            raise ValueError(f"Invalid position ({row}, {col}) on the board")
+
+# Esto verifica la correcta colocación de las piezas y el estado inicial del tablero
+
+import unittest
+from board import Board
+from rook import Rook
+
+class TestBoard(unittest.TestCase):
+    def setUp(self):
+        self.board = Board()
+
+    def test_empty_positions(self):
+        """ Verifica que todas las posiciones iniciales están vacías (None), excepto las posiciones de las torres. """
+        for row in range(8):
+            for col in range(8):
+                if (row == 0 and col in [0, 7]) or (row == 7 and col in [0, 7]):
+                    continue  # Estas posiciones deben tener torres
+                self.assertIsNone(self.board.get_piece(row, col), f"Position ({row}, {col}) should be empty")
+
+    def test_initial_rook_positions(self):
+        """ Verifica que las torres están en las posiciones correctas. """
+        self.assertIsInstance(self.board.get_piece(0, 0), Rook)
+        self.assertIsInstance(self.board.get_piece(0, 7), Rook)
+        self.assertIsInstance(self.board.get_piece(7, 0), Rook)
+        self.assertIsInstance(self.board.get_piece(7, 7), Rook)
+
+        # Verifica que las torres tienen el color correcto
+        self.assertEqual(self.board.get_piece(0, 0).color, "BLACK")
+        self.assertEqual(self.board.get_piece(0, 7).color, "BLACK")
+        self.assertEqual(self.board.get_piece(7, 0).color, "WHITE")
+        self.assertEqual(self.board.get_piece(7, 7).color, "WHITE")
+
+if __name__ == '__main__':
+    unittest.main()
