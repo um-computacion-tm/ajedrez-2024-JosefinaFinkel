@@ -158,7 +158,6 @@
 # if __name__ == '__main__':
 #     unittest.main()
 
-from piece import Piece
 from rook import Rook
 from bishop import Bishop
 from knight import Knight
@@ -170,38 +169,38 @@ class Board:
     def __init__(self):
         """Inicializa el tablero vacío y coloca las piezas en sus posiciones iniciales."""
         self.__positions__ = [[None for _ in range(8)] for _ in range(8)]
-        self._initialize_pieces()
+        self.__initialize_pieces__()
 
-    def _initialize_pieces(self):
+    def __initialize_pieces__(self):
         """Coloca todas las piezas en sus posiciones iniciales."""
         # Torres
-        self.__positions__[0][0] = Rook("BLACK", self)
-        self.__positions__[0][7] = Rook("BLACK", self)
-        self.__positions__[7][0] = Rook("WHITE", self)
-        self.__positions__[7][7] = Rook("WHITE", self)
+        self.__positions__[0][0] = Rook("BLACK")
+        self.__positions__[0][7] = Rook("BLACK")
+        self.__positions__[7][0] = Rook("WHITE")
+        self.__positions__[7][7] = Rook("WHITE")
 
         # Caballos
-        self.__positions__[0][1] = Knight("BLACK", self)
-        self.__positions__[0][6] = Knight("BLACK", self)
-        self.__positions__[7][1] = Knight("WHITE", self)
-        self.__positions__[7][6] = Knight("WHITE", self)
+        self.__positions__[0][1] = Knight("BLACK")
+        self.__positions__[0][6] = Knight("BLACK")
+        self.__positions__[7][1] = Knight("WHITE")
+        self.__positions__[7][6] = Knight("WHITE")
 
         # Alfiles
-        self.__positions__[0][2] = Bishop("BLACK", self)
-        self.__positions__[0][5] = Bishop("BLACK", self)
-        self.__positions__[7][2] = Bishop("WHITE", self)
-        self.__positions__[7][5] = Bishop("WHITE", self)
+        self.__positions__[0][2] = Bishop("BLACK")
+        self.__positions__[0][5] = Bishop("BLACK")
+        self.__positions__[7][2] = Bishop("WHITE")
+        self.__positions__[7][5] = Bishop("WHITE")
 
         # Reyes y Reinas
-        self.__positions__[0][3] = Queen("BLACK", self)
-        self.__positions__[0][4] = King("BLACK", self)
-        self.__positions__[7][3] = Queen("WHITE", self)
-        self.__positions__[7][4] = King("WHITE", self)
+        self.__positions__[0][3] = Queen("BLACK")
+        self.__positions__[0][4] = King("BLACK")
+        self.__positions__[7][3] = Queen("WHITE")
+        self.__positions__[7][4] = King("WHITE")
 
         # Peones
         for col in range(8):
-            self.__positions__[1][col] = Pawn("BLACK", self)
-            self.__positions__[6][col] = Pawn("WHITE", self)
+            self.__positions__[1][col] = Pawn("BLACK")
+            self.__positions__[6][col] = Pawn("WHITE")
 
     def __str__(self):
         """Devuelve una representación en cadena del tablero."""
