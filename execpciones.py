@@ -61,3 +61,24 @@ class InvalidMoveKing(InvalidMove):
 class InvalidMoveQueen(InvalidMove):
     """Movimiento inválido para una reina."""
     pass
+# chess_exceptions.py
+
+class InvalidCoordinates(Exception):
+    """Excepción lanzada cuando las coordenadas están fuera del rango del tablero."""
+    pass
+
+class NoPieceAtPosition(Exception):
+    """Excepción lanzada cuando no hay una pieza en la posición inicial."""
+    pass
+
+class InvalidTurn(Exception):
+    """Excepción lanzada cuando se intenta mover una pieza fuera de turno."""
+    pass
+
+class InvalidMoveDestination(Exception):
+    """Excepción lanzada cuando la posición de destino está ocupada por una pieza del mismo color."""
+    pass
+
+class InvalidMove(Exception):
+    """Excepción lanzada cuando el movimiento es inválido según las reglas de la pieza."""
+    pass
