@@ -1,39 +1,15 @@
 
-
+from execpciones import *
+    
 class Piece:
-     def __init__(self, color, board):
-            self.__color__ = color
-            self.__board__ = board
+    # La clase Piece es la clase base para todas las piezas. Obtienen su color y método str que devuelve el símbolo de la pieza.
+    
+    def __init__(self, color):
+        self.__color__ = color
 
-def __str__(self):
-   if self.__color__ == 'white':
-       return self.white_str()
-   else:
-       return self.black_str()
-   
-def can_move(self, start_pos, end_pos, board):
-    # verificar si la pieza puede moverse de start_pos a end_pos
-    pass
+    def __str__(self):
+        # Devuelve el símbolo de la pieza (esto se definirá en las subclases).
+        return "Pieza"
 
-   
-class Rook(Piece):
- ...
-
-  
-class Pawn(Piece):
-    ...
-
-        
-class Bishop(Piece):
-   ...
-       
-class Knight(Piece):
-   ...
-        
-class Queen(Piece):
-   ...  
-        
-class King(Piece):
-   ...
-
-
+    def get_color(self):
+        return self.__color__
