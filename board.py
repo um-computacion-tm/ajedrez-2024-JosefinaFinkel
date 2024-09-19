@@ -14,6 +14,7 @@ class Board:
         """Inicializa el tablero vacío y coloca las piezas en sus posiciones iniciales."""
         self.__positions__ = [[None for _ in range(8)] for _ in range(8)]
         self.__initialize_pieces__()
+    
 
     def __initialize_pieces__(self):
         """Coloca todas las piezas en sus posiciones iniciales."""
@@ -63,13 +64,10 @@ class Board:
         return 0 <= row < 8 and 0 <= col < 8
 
     def get_piece(self, row, col):
-        """Devuelve la pieza en una posición determinada."""
+        """Devuelve la pieza en una posición determinada o None si está vacía."""
         if not self.valid_position(row, col):
-            raise InvalidCoordinates(f"Posición fuera del tablero: ({row}, {col})")
-        piece = self.__positions__[row][col]
-        if piece is None:
-            raise NoPieceAtPosition(f"No hay pieza en la posición: ({row}, {col})")
-        return piece
+            return None  # Cambiar a retornar None en lugar de lanzar una excepción
+        return self.__positions__[row][col]
 
     def move_piece(self, from_row, from_col, to_row, to_col):
         """Mueve una pieza de una posición a otra si el movimiento es válido."""

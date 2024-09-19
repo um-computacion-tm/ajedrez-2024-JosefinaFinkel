@@ -82,3 +82,11 @@ class InvalidMoveDestination(Exception):
 class InvalidMove(Exception):
     """Excepción lanzada cuando el movimiento es inválido según las reglas de la pieza."""
     pass
+
+class InvalidMoveDiagonal(Exception):
+    """Excepción lanzada cuando un movimiento diagonal no es válido."""
+    pass
+
+class InvalidMoveVerticalHorizontal(Exception):
+    """Excepción lanzada cuando un movimiento vertical u horizontal no es válido."""
+    pass

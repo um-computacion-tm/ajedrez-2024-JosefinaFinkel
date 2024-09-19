@@ -78,10 +78,8 @@ class Chess:
             raise InvalidTurn(f"No es el turno de las {self.__turn__}")
 
         # Validar si el movimiento es válido según las reglas de la pieza
-        try:
-            piece.valid_moves(from_row, from_col, to_row, to_col, self.__board__)
-        except InvalidMove as e:
-            raise e  # Propagar la excepción si el movimiento no es válido
+        if not piece.valid_moves(from_row, from_col, to_row, to_col, self.__board__):
+            raise InvalidMove("Movimiento inválido según las reglas de la pieza")
 
         # Obtener la pieza en la posición de destino
         destination_piece = self.__board__.get_piece(to_row, to_col)
@@ -107,3 +105,5 @@ class Chess:
     def __str__(self):
         """Devuelve una representación en cadena del estado del tablero"""
         return str(self.__board__)
+
+
