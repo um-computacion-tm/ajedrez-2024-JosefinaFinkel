@@ -15,4 +15,4 @@ class Queen(Piece):
 
     def __str__(self):
         # Devuelve el símbolo de la reina según su color.
-        return "♛" if self.get_color() == "WHITE" else "♕"
+        return "♕" if self.get_color() == "WHITE" else "♛"
