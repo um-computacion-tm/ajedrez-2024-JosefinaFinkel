@@ -1,42 +1,67 @@
 
+
+
 # from board import Board
+# from movimientos import ReglasDeMovimientos
+# from execpciones import *
 
 # class Chess:
 #     def __init__(self):
 #         self.__board__ = Board()
 #         self.__turn__ = "white"
+#         self.__movimientos__ = ReglasDeMovimientos()
 
-#     def move(
-#         self,
-#         from_row, 
-#         from_col, 
-#         to_row,
-#         to_col):
-#         ...
-#         #validar coordenadas  
-#         piece = self.board.get_piece(from_row, from_col)
+#     def move(self, from_row, from_col, to_row, to_col):
+#         # Validar que las coordenadas estén dentro del rango del tablero
+#         if not (0 <= from_row <= 7 and 0 <= from_col <= 7 and 0 <= to_row <= 7 and 0 <= to_col <= 7):
+#             raise InvalidCoordinates("Coordenadas fuera del rango del tablero")
+
+#         # Obtener la pieza de la posición de origen
+#         piece = self.__board__.get_piece(from_row, from_col)
+
+#         # Validar que haya una pieza en la posición inicial
+#         if piece is None:
+#             raise NoPieceAtPosition("No hay una pieza en las coordenadas de origen")
+
+#         # Validar si la pieza pertenece al jugador que tiene el turno
+#         if (piece.get_color() == "white" and self.__turn__ != "white") or (piece.get_color() == "black" and self.__turn__ != "black"):
+#             raise InvalidTurn("No es el turno de la pieza seleccionada")
+
+#         # Validar si el movimiento es válido según las reglas de la pieza
+#         try:
+#             piece.valid_moves(from_row, from_col, to_row, to_col)
+#         except InvalidMove as e:
+#             raise e  # Capturar y propagar la excepción si el movimiento no es válido
+
+#         # Obtener la pieza en la posición de destino
+#         destination_piece = self.__board__.get_piece(to_row, to_col)
+
+#         # Verificar que la posición de destino no tenga una pieza del mismo color
+#         if destination_piece and destination_piece.get_color() == piece.get_color():
+#             raise InvalidMoveDestination("No se puede mover a una posición ocupada por una pieza del mismo color")
+
+#         # Mover la pieza en el tablero
+#         self.__board__.move_piece(from_row, from_col, to_row, to_col)
+
+#         # Cambiar turno después del movimiento
 #         self.change_turn()
 
-#         self.change_turn()
 #     def change_turn(self):
-#         if self.__turn__ == "white":
-#             self.__turn__ = "black"
-#         else:
-#             self.__turn__ = "white"
-            
-
+#         self.__turn__ = "black" if self.__turn__ == "white" else "white"
 
 from board import Board
 from movimientos import ReglasDeMovimientos
-from execpciones import *
+from execpciones import InvalidMove, InvalidTurn, NoPieceAtPosition, InvalidCoordinates, InvalidMoveDestination
 
 class Chess:
     def __init__(self):
-        self.__board__ = Board()
-        self.__turn__ = "white"
-        self.__movimientos__ = ReglasDeMovimientos()
+        self.__board__ = Board()  # Instancia del tablero
+        self.__turn__ = "white"   # Turno inicial
+        self.__movimientos__ = ReglasDeMovimientos()  # Instancia de las reglas de movimientos
 
     def move(self, from_row, from_col, to_row, to_col):
+        """Realiza un movimiento de una pieza si es válido"""
+        
         # Validar que las coordenadas estén dentro del rango del tablero
         if not (0 <= from_row <= 7 and 0 <= from_col <= 7 and 0 <= to_row <= 7 and 0 <= to_col <= 7):
             raise InvalidCoordinates("Coordenadas fuera del rango del tablero")
@@ -49,14 +74,14 @@ class Chess:
             raise NoPieceAtPosition("No hay una pieza en las coordenadas de origen")
 
         # Validar si la pieza pertenece al jugador que tiene el turno
-        if (piece.get_color() == "white" and self.__turn__ != "white") or (piece.get_color() == "black" and self.__turn__ != "black"):
-            raise InvalidTurn("No es el turno de la pieza seleccionada")
+        if piece.get_color() != self.__turn__:
+            raise InvalidTurn(f"No es el turno de las {self.__turn__}")
 
         # Validar si el movimiento es válido según las reglas de la pieza
         try:
-            piece.valid_moves(from_row, from_col, to_row, to_col)
+            piece.valid_moves(from_row, from_col, to_row, to_col, self.__board__)
         except InvalidMove as e:
-            raise e  # Capturar y propagar la excepción si el movimiento no es válido
+            raise e  # Propagar la excepción si el movimiento no es válido
 
         # Obtener la pieza en la posición de destino
         destination_piece = self.__board__.get_piece(to_row, to_col)
@@ -72,5 +97,13 @@ class Chess:
         self.change_turn()
 
     def change_turn(self):
+        """Cambia el turno del jugador"""
         self.__turn__ = "black" if self.__turn__ == "white" else "white"
 
+    def get_turn(self):
+        """Devuelve el color del jugador que tiene el turno actual"""
+        return self.__turn__
+
+    def __str__(self):
+        """Devuelve una representación en cadena del estado del tablero"""
+        return str(self.__board__)
