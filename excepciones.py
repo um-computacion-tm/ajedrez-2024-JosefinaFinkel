@@ -94,15 +94,3 @@ class InvalidMoveVerticalHorizontal(Exception):
 class InvalidMoveError(Exception):
     """Excepción lanzada cuando un movimiento no es válido."""
     pass
-
-class NotYourTurnError(Exception):
-    """Excepción lanzada cuando un jugador intenta mover una pieza en su turno."""
-    pass
-
-class OutOfBoundsError(Exception):
-    """Excepción lanzada cuando se intenta mover una pieza fuera del tablero."""
-    pass
-
-class PieceOccupiedError(Exception):
-    """Excepción lanzada cuando se intenta mover una pieza a una casilla ocupada por otra pieza del mismo color."""
-    pass

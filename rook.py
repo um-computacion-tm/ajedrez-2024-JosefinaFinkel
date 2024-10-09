@@ -16,14 +16,16 @@ class Rook(Piece):
         return "♖" if self.get_color() == "white" else "♜"
 
     def valid_moves(self, from_row, from_col, to_row, to_col, board):
-        if not self.__movimientos_rook__.vertical_horizontal_move(from_row, from_col, to_row, to_col):
-            raise InvalidMoveVerticalHorizontal("El movimiento solo puede ser en vertical o horizontal")
-        return True
+        # Verificar que la posición inicial y final son válidas
+        if not board.valid_position(from_row, from_col) or not board.valid_position(to_row, to_col):
+            raise InvalidMoveVerticalHorizontal("Posición inválida")
 
-    def valid_moves(self, from_row, from_col, to_row, to_col, board):
         # Validar que el movimiento es estrictamente vertical o horizontal
-        return board.valid_position(from_row, from_col) and \
-               (from_row == to_row or from_col == to_col)
+        if not (from_row == to_row or from_col == to_col):
+            raise InvalidMoveVerticalHorizontal("El movimiento solo puede ser en vertical o horizontal")
+        
+        # Aquí puedes agregar más validaciones como si el camino está despejado
+        return True
 
 
 
