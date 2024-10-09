@@ -15,4 +15,4 @@ class Pawn(Piece):
 
     def __str__(self):
         # Devuelve el símbolo del peón según su color.
-        return "♙" if self.get_color() == "WHITE" else "♟"
+        return "♙" if self.get_color() == "white" else "♟"

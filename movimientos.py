@@ -1,6 +1,6 @@
 
 
-from execpciones import *
+from excepciones import *
 
 class ReglasDeMovimientos:
 
@@ -59,20 +59,25 @@ class ReglasDeMovimientos:
         col_diff = self.col_difference_move(from_col, to_col)
         if row_diff > 1 or col_diff > 1:
             raise InvalidMoveKing("El rey solo puede moverse una casilla en cualquier dirección")
-    
-    def queen_movement(self, from_row, from_col, to_row, to_col): 
+
+    def queen_movement(self, from_row, from_col, to_row, to_col):
         """Determina si el movimiento es válido para una reina (combinación de movimientos verticales, horizontales y diagonales)."""
+        
         try:
+            # Verifica el movimiento diagonal
             self.diagonal_move(from_row, from_col, to_row, to_col)
             return True
         except InvalidMoveDiagonal:
             pass  # Si no es diagonal, continúa verificando otros movimientos
 
         try:
+            # Verifica el movimiento vertical u horizontal
             self.vertical_horizontal_move(from_row, from_col, to_row, to_col)
             return True
         except InvalidMoveVerticalHorizontal:
             pass  # Si no es vertical ni horizontal, continúa con la verificación
 
         raise InvalidMoveQueen("La reina solo puede moverse en línea recta o en diagonal")
+
+
 

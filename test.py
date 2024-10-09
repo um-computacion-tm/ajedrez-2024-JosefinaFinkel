@@ -8,7 +8,7 @@ from pawn import Pawn
 from board import Board
 from chess import Chess
 from movimientos import ReglasDeMovimientos
-from execpciones import InvalidMove, InvalidTurn, NoPieceAtPosition, InvalidCoordinates, InvalidMoveDestination, InvalidMoveDiagonal, InvalidMoveVerticalHorizontal
+from excepciones import InvalidMove, InvalidTurn, NoPieceAtPosition, InvalidCoordinates, InvalidMoveDestination, InvalidMoveDiagonal, InvalidMoveVerticalHorizontal
 
 # Clase de pruebas para el juego de ajedrez
 class TestChessGame(unittest.TestCase):
