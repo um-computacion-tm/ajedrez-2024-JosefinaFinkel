@@ -2,7 +2,7 @@
 
 from piece import Piece
 from movimientos import ReglasDeMovimientos
-from execpciones import InvalidMoveDiagonal
+from excepciones import InvalidMoveDiagonal
 
 class Bishop(Piece):
     

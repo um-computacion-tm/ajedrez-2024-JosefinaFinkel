@@ -6,7 +6,7 @@ from bishop import Bishop
 from queen import Queen
 from king import King
 from pawn import Pawn
-from execpciones import InvalidCoordinates, NoPieceAtPosition, InvalidMove
+from excepciones import InvalidCoordinates, NoPieceAtPosition, InvalidMove
 from movimientos import ReglasDeMovimientos
 
 class Board:

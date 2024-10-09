@@ -1,5 +1,5 @@
 
-from execpciones import *
+from excepciones import *
     
 class Piece:
     # La clase Piece es la clase base para todas las piezas. Obtienen su color y método str que devuelve el símbolo de la pieza.
