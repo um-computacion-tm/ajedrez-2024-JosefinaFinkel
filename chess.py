@@ -63,7 +63,7 @@ class Chess:
 
     def move(self, from_row, from_col, to_row, to_col):
         """Realiza un movimiento de una pieza si es válido"""
-    
+        
         # Validar que las coordenadas estén dentro del rango del tablero
         if not self.__board__.valid_position(from_row, from_col) or not self.__board__.valid_position(to_row, to_col):
             raise InvalidCoordinates("Coordenadas fuera del rango del tablero")
@@ -72,7 +72,6 @@ class Chess:
         piece = self.__board__.get_piece(from_row, from_col)
 
         # Validar que haya una pieza en la posición inicial
-       # Validar que haya una pieza en la posición inicial
         if piece is None:
             raise NoPieceAtPosition("No hay una pieza en las coordenadas de origen")
 
@@ -80,13 +79,8 @@ class Chess:
         print(f"Turno actual: {self.get_turn()}, Color de la pieza: {piece.get_color()}")  
 
         # Validar si la pieza pertenece al jugador que tiene el turno
-        if piece.get_color() != self.get_turn():  # Esta línea es correcta
+        if piece.get_color() != self.get_turn():
             raise InvalidTurn(f"No es el turno de {self.get_turn()}")
-
-
-        # Validar si la pieza pertenece al jugador que tiene el turno
-        if piece.get_color() != self.get__turn__:
-            raise InvalidTurn(f"No es el turno de {self.__turn__}")
 
         # Validar si el movimiento es válido según las reglas de la pieza
         if not piece.valid_moves(from_row, from_col, to_row, to_col, self.__board__):
@@ -100,7 +94,7 @@ class Chess:
         # Mover la pieza en el tablero
         self.__board__.move_piece(from_row, from_col, to_row, to_col)
 
-        # Cambiar turno después del movimiento
+        # Cambiar turno solo si el movimiento fue exitoso
         self.change_turn()
 
     def change_turn(self):
