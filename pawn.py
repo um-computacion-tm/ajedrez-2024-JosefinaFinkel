@@ -20,7 +20,6 @@
 
 from piece import Piece
 from movimientos import ReglasDeMovimientos
-from board import Board
 from excepciones import InvalidMoveNotInBoard, InvalidMoveSameColor
 
 class Pawn(Piece):
