@@ -15,4 +15,4 @@ class King(Piece):
 
     def __str__(self):
         # Devuelve el símbolo del rey según su color.
-        return "♔" if self.get_color() == "white" else "♚"
+        return "♔" if self.get_color() == "WHITE" else "♚"

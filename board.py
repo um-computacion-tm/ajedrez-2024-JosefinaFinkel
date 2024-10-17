@@ -93,3 +93,18 @@ class Board:
     def is_position_empty(self, row, col):
         """Verifica si una posición está vacía."""
         return self.__positions__[row][col] is None
+
+    def is_path_clear(self, from_row, from_col, to_row, to_col):
+        """Verifica si el camino entre dos posiciones está libre de piezas."""
+        row_step = 1 if to_row > from_row else -1 if to_row < from_row else 0
+        col_step = 1 if to_col > from_col else -1 if to_col < from_col else 0
+        
+        current_row, current_col = from_row + row_step, from_col + col_step
+        
+        while current_row != to_row or current_col != to_col:
+            if not self.is_position_empty(current_row, current_col):
+                return False
+            current_row += row_step
+            current_col += col_step
+
+        return True

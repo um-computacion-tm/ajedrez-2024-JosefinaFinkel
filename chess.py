@@ -58,7 +58,7 @@ from excepciones import InvalidMove, InvalidTurn, NoPieceAtPosition, InvalidCoor
 class Chess:
     def __init__(self):
         self.__board__ = Board()
-        self.__turn__ = "white"
+        self.__turn__ = "WHITE"
         self.__movimientos__ = ReglasDeMovimientos()
 
     def move(self, from_row, from_col, to_row, to_col):
@@ -99,7 +99,7 @@ class Chess:
 
     def change_turn(self):
         """Cambia el turno del jugador"""
-        self.__turn__ = "black" if self.__turn__ == "white" else "white"
+        self.__turn__ = "BLACK" if self.__turn__ == "WHITE" else "WHITE"
 
     def get_turn(self):
         """Devuelve el color del jugador que tiene el turno actual"""
