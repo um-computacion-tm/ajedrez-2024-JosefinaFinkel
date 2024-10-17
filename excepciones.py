@@ -90,3 +90,7 @@ class InvalidMoveDiagonal(Exception):
 class InvalidMoveVerticalHorizontal(Exception):
     """Excepción lanzada cuando un movimiento vertical u horizontal no es válido."""
     pass
+
+class InvalidMoveError(Exception):
+    """Excepción lanzada cuando un movimiento no es válido."""
+    pass
