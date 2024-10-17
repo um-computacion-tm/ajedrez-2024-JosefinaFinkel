@@ -29,6 +29,7 @@ class Pawn(Piece):
         self.__movimientos_pawn__ = ReglasDeMovimientos()  # Instancia de las reglas de movimientos.
 
     def valid_moves(self, from_row, from_col, to_row, to_col, board):
+        from board import Board
         # 1. Verifica si la posición de destino está dentro del tablero
         if not board.valid_position(to_row, to_col):
             raise InvalidMoveNotInBoard("La posición de destino no es válida")
