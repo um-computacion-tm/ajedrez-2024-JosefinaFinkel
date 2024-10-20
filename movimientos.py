@@ -80,4 +80,37 @@ class ReglasDeMovimientos:
         raise InvalidMoveQueen("La reina solo puede moverse en línea recta o en diagonal")
 
 
+    # def pawn_movement(self, from_row, from_col, to_row, to_col):
+    #     # Lógica para el movimiento del peón, como solo avanzar en la misma columna
+    #     if from_col != to_col:
+    #         raise InvalidMovePawn("El peón solo puede avanzar en la misma columna")
+        
+    #     # Movimiento de una casilla hacia adelante
+    #     if abs(from_row - to_row) == 1:
+    #         return True
+
+    #     # Movimiento inicial de dos casillas hacia adelante desde la posición de inicio
+    #     if abs(from_row - to_row) == 2 and (from_row == 1 or from_row == 6):
+    #         return True
+
+    #     raise InvalidMovePawn("El movimiento del peón no es válido.")
+
+    
+    def pawn_movement(self, from_row, from_col, to_row, to_col, color):
+        if color == "WHITE":
+            if from_row == 1:  # Primer movimiento
+                if to_row == from_row + 2 and to_col == from_col:
+                    return True  # Movimiento de dos casillas
+            if to_row == from_row + 1 and to_col == from_col:
+                return True  # Movimiento de una casilla
+
+        if color == "BLACK":
+            if from_row == 6:  # Primer movimiento
+                if to_row == from_row - 2 and to_col == from_col:
+                    return True  # Movimiento de dos casillas
+            if to_row == from_row - 1 and to_col == from_col:
+                return True  # Movimiento de una casilla
+
+        # Si llega aquí, el movimiento es inválido
+        raise InvalidMovePawn("Movimiento inválido para el peón")
 

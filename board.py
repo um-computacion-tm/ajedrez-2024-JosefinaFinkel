@@ -44,8 +44,9 @@ class Board:
 
         # Peones
         for col in range(8):
-            self.__positions__[1][col] = Pawn("BLACK")
-            self.__positions__[6][col] = Pawn("WHITE")
+            self.__positions__[1][col] = Pawn("WHITE")
+            self.__positions__[6][col] = Pawn("BLACK")
+            
 
     def __str__(self):
         """Devuelve una representación en cadena del tablero."""
@@ -78,7 +79,7 @@ class Board:
         piece = self.get_piece(from_row, from_col)
 
         # Verificar si el movimiento es válido según las reglas de la pieza
-        if not piece.valid_moves(from_row, from_col, to_row, to_col):
+        if not piece.valid_moves(from_row, from_col, to_row, to_col, self):
             raise InvalidMove("El movimiento no es válido para esta pieza")
 
         # Verificar si la posición de destino está vacía o contiene una pieza del oponente
