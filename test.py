@@ -139,9 +139,10 @@ class TestChessGame(unittest.TestCase):
         self.chess.move(1, 0, 3, 0)  # Peón blanco avanza
         self.assertEqual(self.chess.get_turn(), "BLACK")  # Verifica que el turno cambió
         with self.assertRaises(InvalidTurn):
-            self.chess.move(6, 0, 5, 0)  # Intentar mover peón negro en el turno blanco
+            self.chess.move(1, 1, 3, 1)  # Intentar mover peón blanco en el turno negro
 
 
 if __name__ == '__main__':
     unittest.main()
+
 
