@@ -21,14 +21,31 @@
 from piece import Piece
 from movimientos import ReglasDeMovimientos
 
+# class Knight(Piece):
+    
+#     def __init__(self, color):
+#         super().__init__(color)
+#         self.movimientos = ReglasDeMovimientos()
+
+#     def valid_moves(self, from_row, from_col, to_row, to_col, board):
+#         # Valida el movimiento del caballo
+#         self.movimientos.knight_movement(from_row, from_col, to_row, to_col)
+#         return True
+
+#     def __str__(self):
+#         return "♘" if self.get_color() == "WHITE" else "♞"
+
 class Knight(Piece):
     
     def __init__(self, color):
         super().__init__(color)
-        self.movimientos = ReglasDeMovimientos()
+        self._initialize_movements()
+
+    def _initialize_movements(self):
+        """Inicializa las reglas de movimientos para el caballo"""
+        self.movimientos = ReglasDeMovimientos()  # Mover la lógica común aquí
 
     def valid_moves(self, from_row, from_col, to_row, to_col, board):
-        # Valida el movimiento del caballo
         self.movimientos.knight_movement(from_row, from_col, to_row, to_col)
         return True
 
