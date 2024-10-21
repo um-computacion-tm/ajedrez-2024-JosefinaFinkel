@@ -168,6 +168,14 @@ class TestChessGame(unittest.TestCase):
         with self.assertRaises(InvalidMoveVerticalHorizontal):
             rook.valid_moves(0, 0, 1, 1, board)  # Movimiento diagonal inválido
 
+    # def test_invalid_rook_movement(self):
+    #     """Prueba los movimientos inválidos de la torre"""
+    #     rook = Rook("WHITE")
+    #     board = Board()
+
+    #     # Como los movimientos inválidos ahora lanzan InvalidMove en vez de InvalidMoveVerticalHorizontal
+    #     with self.assertRaises(InvalidMove):
+    #         rook.valid_moves(0, 0, 2, 2, board)  # Movimiento inválido (no es en línea recta)
 
     def test_valid_bishop_movement(self):
         """Prueba los movimientos válidos del alfil"""
@@ -191,12 +199,39 @@ class TestChessGame(unittest.TestCase):
         with self.assertRaises(InvalidMoveDiagonal):
             bishop.valid_moves(0, 0, 2, 2, board)  # Movimiento diagonal que está bloqueado
 
+
+
+
+
+
+    # def test_valid_bishop_movement(self):
+    #     """Prueba los movimientos válidos del alfil"""
+    #     bishop = Bishop("WHITE")
+    #     board = Board()
+
+    #     # Limpiar el camino del alfil (por ejemplo, vaciar posiciones intermedias)
+    #     board.__positions__[1][1] = None  # Limpia el peón u otra pieza en (1,1)
+
+    #     # Ahora prueba el movimiento diagonal del alfil
+    #     self.assertTrue(bishop.valid_moves(0, 0, 2, 2, board))  # Movimiento diagonal
+
+    # def test_invalid_bishop_movement(self):
+    #     """Prueba los movimientos inválidos del alfil"""
+    #     bishop = Bishop("WHITE")
+    #     board = Board()
+
+    #     # Se usa InvalidMove en lugar de InvalidMoveDiagonal
+    #     with self.assertRaises(InvalidMove):
+    #         bishop.valid_moves(0, 0, 0, 2, board)  # Movimiento inválido (no es diagonal)
+
     # Tests para las excepciones
     def test_no_piece_at_position(self):
         """Prueba que lance excepción cuando no hay pieza en una posición"""
         with self.assertRaises(NoPieceAtPosition):
             self.chess.move(0, 0, 0, 1)  # No hay pieza en esta posición
     
+    def test_no_piece_at_position(self):
+        """Prueba que lance excepción cuando no hay pieza en una posición"""
         with self.assertRaises(NoPieceAtPosition):
             self.chess.move(2, 2, 2, 3)  # No hay pieza en esta posición
 
