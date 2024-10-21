@@ -21,6 +21,7 @@
 
 from piece import Piece
 from movimientos import ReglasDeMovimientos
+from piece import PieceWithMovement
 
 # class King(Piece):
     
@@ -46,6 +47,11 @@ class King(Piece):
             """Inicializa las reglas de movimientos para el rey"""
             self.movimientos = ReglasDeMovimientos()  # Mover la lógica común aquí
 
+        def valid_moves(self, from_row, from_col, to_row, to_col, board):
+            self.movimientos.king_movement(from_row, from_col, to_row, to_col)
+            return True
+
+class King(PieceWithMovement):
         def valid_moves(self, from_row, from_col, to_row, to_col, board):
             self.movimientos.king_movement(from_row, from_col, to_row, to_col)
             return True
