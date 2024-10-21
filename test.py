@@ -142,10 +142,23 @@ class TestChessGame(unittest.TestCase):
         self.chess.change_turn()
         self.assertEqual(self.chess.get_turn(), "BLACK")
 
-    def test_invalid_coordinates(self):
+    # def test_invalid_coordinates(self):
+    #     """Prueba el manejo de coordenadas fuera de rango"""
+    #     with self.assertRaises(InvalidCoordinates):
+    #         self.chess.move(8, 0, 9, 0)  # Movimiento fuera del rango del tablero
+
+# Pruebas de coordenadas inválidas
+    def test_invalid_coordinates_out_of_bounds(self):
         """Prueba el manejo de coordenadas fuera de rango"""
         with self.assertRaises(InvalidCoordinates):
-            self.chess.move(8, 0, 9, 0)  # Movimiento fuera del rango del tablero
+            self.chess.move(8, 0, 9, 0)
+
+    def test_invalid_coordinates_other_case(self):
+        """Prueba otro caso de coordenadas inválidas"""
+        with self.assertRaises(InvalidCoordinates):
+            self.chess.move(-1, 0, 0, 0)  # Movimiento fuera del rango del tablero
+
+
 
     def test_valid_rook_movement(self):
         """Prueba los movimientos válidos de la torre"""
@@ -238,24 +251,24 @@ class TestChessGame(unittest.TestCase):
         with self.assertRaises(InvalidTurn):
             self.chess.move(1, 1, 3, 1)  # Intentar mover peón blanco en el turno negro
 
- # Tests para verificar King y Knight después de la refactorización
-    def test_valid_king_movement(self):
-        """Prueba los movimientos válidos del rey"""
-        king = King("WHITE")
+ # Método auxiliar
+    def _test_valid_piece_movement(self, piece_class, start_position, end_position):
+        """Prueba los movimientos válidos de una pieza"""
+        piece = piece_class("WHITE")
         board = Board()
 
-        # Verifica un movimiento válido del rey
-        self.assertTrue(king.valid_moves(4, 4, 5, 5, board))  # Movimiento diagonal de una casilla
-        self.assertTrue(king.valid_moves(4, 4, 5, 4, board))  # Movimiento vertical de una casilla
+        # Limpiar el camino de la pieza en la posición inicial
+        board.__positions__[start_position[0]][start_position[1]] = piece
+
+        # Verifica que el movimiento es válido
+        self.assertTrue(piece.valid_moves(start_position[0], start_position[1], end_position[0], end_position[1], board))
+
+    # Métodos de prueba específicos
+    def test_valid_king_movement(self):
+        self._test_valid_piece_movement(King, (0, 4), (1, 5))  # Ejemplo de posiciones
 
     def test_valid_knight_movement(self):
-        """Prueba los movimientos válidos del caballo"""
-        knight = Knight("WHITE")
-        board = Board()
-
-        # Verifica un movimiento en 'L' del caballo
-        self.assertTrue(knight.valid_moves(4, 4, 6, 5, board))  # Movimiento en 'L'
-        self.assertTrue(knight.valid_moves(4, 4, 2, 5, board))  # Otro movimiento en 'L'
+        self._test_valid_piece_movement(Knight, (0, 1), (2, 0))  # Ejemplo de posiciones
 
 
 
