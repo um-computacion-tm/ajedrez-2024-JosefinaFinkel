@@ -8,8 +8,9 @@ from pawn import Pawn
 from board import Board
 from chess import Chess
 from movimientos import ReglasDeMovimientos
-from execpciones import InvalidMove, InvalidTurn, NoPieceAtPosition, InvalidCoordinates, InvalidMoveDestination, InvalidMoveDiagonal, InvalidMoveVerticalHorizontal
-
+from excepciones import InvalidMove, InvalidTurn, NoPieceAtPosition, InvalidCoordinates, InvalidMoveDestination, InvalidMoveDiagonal, InvalidMoveVerticalHorizontal
+from chess import Chess
+from excepciones import InvalidMovePawn, InvalidTurn
 # Clase de pruebas para el juego de ajedrez
 class TestChessGame(unittest.TestCase):
     
@@ -20,12 +21,12 @@ class TestChessGame(unittest.TestCase):
     # Tests para la clase Chess
     def test_turn_initial(self):
         """Verifica que el turno inicial sea de las blancas"""
-        self.assertEqual(self.chess.get_turn(), "white")
+        self.assertEqual(self.chess.get_turn(), "WHITE")
     
     def test_change_turn(self):
         """Verifica el cambio de turno"""
         self.chess.change_turn()
-        self.assertEqual(self.chess.get_turn(), "black")
+        self.assertEqual(self.chess.get_turn(), "BLACK")
 
     def test_invalid_coordinates(self):
         """Prueba el manejo de coordenadas fuera de rango"""
@@ -33,31 +34,72 @@ class TestChessGame(unittest.TestCase):
             self.chess.move(8, 0, 9, 0)  # Movimiento fuera del rango del tablero
 
     # Tests para movimientos de piezas
+    # def test_valid_rook_movement(self):
+    #     """Prueba los movimientos válidos de la torre"""
+    #     rook = Rook("WHITE")
+    #     board = Board()
+    #     self.assertTrue(rook.valid_moves(0, 0, 0, 5, board))  # Movimiento horizontal
+
+    # def test_invalid_rook_movement(self):
+    #     """Prueba los movimientos inválidos de la torre"""
+    #     rook = Rook("WHITE")
+    #     board = Board()
+    #     with self.assertRaises(InvalidMoveVerticalHorizontal):
+    #         rook.valid_moves(0, 0, 2, 2, board)  # Movimiento inválido (no es en línea recta)
+
     def test_valid_rook_movement(self):
         """Prueba los movimientos válidos de la torre"""
-        rook = Rook("white")
+        rook = Rook("WHITE")
         board = Board()
+
+        # Limpiar el camino de la torre en la fila 0
+        for col in range(1, 5):  # Limpiar las posiciones de (0,1) a (0,4)
+            board.__positions__[0][col] = None
+
+        # Ahora prueba el movimiento horizontal de la torre
         self.assertTrue(rook.valid_moves(0, 0, 0, 5, board))  # Movimiento horizontal
 
     def test_invalid_rook_movement(self):
         """Prueba los movimientos inválidos de la torre"""
-        rook = Rook("white")
+        rook = Rook("WHITE")
         board = Board()
+
+        # El movimiento inválido no necesita cambios, ya que es diagonal y siempre inválido para la torre
         with self.assertRaises(InvalidMoveVerticalHorizontal):
             rook.valid_moves(0, 0, 2, 2, board)  # Movimiento inválido (no es en línea recta)
 
+
+    # def test_valid_bishop_movement(self):
+    #     """Prueba los movimientos válidos del alfil"""
+    #     bishop = Bishop("WHITE")
+    #     board = Board()
+    #     self.assertTrue(bishop.valid_moves(0, 0, 2, 2, board))  # Movimiento diagonal
+
+    # def test_invalid_bishop_movement(self):
+    #     """Prueba los movimientos inválidos del alfil"""
+    #     bishop = Bishop("WHITE")
+    #     board = Board()
+    #     with self.assertRaises(InvalidMoveDiagonal):
+    #         bishop.valid_moves(0, 0, 0, 2, board)  # Movimiento inválido (no es diagonal)
+
     def test_valid_bishop_movement(self):
         """Prueba los movimientos válidos del alfil"""
-        bishop = Bishop("white")
+        bishop = Bishop("WHITE")
         board = Board()
+
+    # Limpiar el camino del alfil (por ejemplo, vaciar posiciones intermedias)
+        board.__positions__[1][1] = None  # Limpia el peón u otra pieza en (1,1)
+
+        # Ahora prueba el movimiento diagonal del alfil
         self.assertTrue(bishop.valid_moves(0, 0, 2, 2, board))  # Movimiento diagonal
 
     def test_invalid_bishop_movement(self):
         """Prueba los movimientos inválidos del alfil"""
-        bishop = Bishop("white")
+        bishop = Bishop("WHITE")
         board = Board()
         with self.assertRaises(InvalidMoveDiagonal):
-            bishop.valid_moves(0, 0, 0, 2, board)  # Movimiento inválido (no es diagonal)
+            bishop.valid_moves(0, 0, 0, 2, board)  # Movimiento inválido
+
 
     # Tests para las excepciones
     def test_no_piece_at_position(self):
@@ -70,12 +112,37 @@ class TestChessGame(unittest.TestCase):
         with self.assertRaises(NoPieceAtPosition):
             self.chess.move(2, 2, 2, 3)  # No hay pieza en esta posición
 
-    
+#nuevos 
+
+    def test_valid_pawn_movement_white(self):
+        """Prueba movimientos válidos de peones blancos"""
+        self.chess.move(1, 0, 3, 0)  # Primer movimiento de dos casillas
+        self.chess.move(6, 0, 4, 0)  # Mover peón negro dos casillas
+        self.chess.move(3, 0, 4, 0)  # Movimiento de una casilla hacia adelante
+
+    def test_invalid_pawn_movement_white(self):
+        """Prueba movimientos inválidos de peones blancos"""
+        with self.assertRaises(InvalidMovePawn):
+            self.chess.move(1, 0, 4, 0)  # Intentar mover tres casillas
+        
+        with self.assertRaises(InvalidMovePawn):
+            self.chess.move(1, 0, 2, 1)  # Intentar mover en diagonal sin captura
+
+    # def test_invalid_turn(self):
+    #     """Prueba el manejo de turnos inválidos"""
+    #     self.chess.move(1, 0, 3, 0)  # Peón blanco avanza
+    #     with self.assertRaises(InvalidTurn):
+    #         self.chess.move(6, 0, 5, 0)  # Intentar mover peón negro en el turno blanco
+
     def test_invalid_turn(self):
         """Prueba el manejo de turnos inválidos"""
+        self.chess.move(1, 0, 3, 0)  # Peón blanco avanza
+        self.assertEqual(self.chess.get_turn(), "BLACK")  # Verifica que el turno cambió
         with self.assertRaises(InvalidTurn):
-            self.chess.move(6, 0, 5, 0)  # Intentar mover una pieza negra en el turno blanco
+            self.chess.move(1, 1, 3, 1)  # Intentar mover peón blanco en el turno negro
+
 
 if __name__ == '__main__':
     unittest.main()
+
 

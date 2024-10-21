@@ -6,7 +6,7 @@ from bishop import Bishop
 from queen import Queen
 from king import King
 from pawn import Pawn
-from execpciones import InvalidCoordinates, NoPieceAtPosition, InvalidMove
+from excepciones import InvalidCoordinates, NoPieceAtPosition, InvalidMove
 from movimientos import ReglasDeMovimientos
 
 class Board:
@@ -18,34 +18,35 @@ class Board:
 
     def __initialize_pieces__(self):
         """Coloca todas las piezas en sus posiciones iniciales."""
-        # Torres
-        self.__positions__[0][0] = Rook("BLACK")
-        self.__positions__[0][7] = Rook("BLACK")
-        self.__positions__[7][0] = Rook("WHITE")
-        self.__positions__[7][7] = Rook("WHITE")
+
+        self.__positions__[0][0] = Rook("WHITE")  # Cambiado a WHITE
+        self.__positions__[0][7] = Rook("WHITE")  # Cambiado a WHITE
+        self.__positions__[7][0] = Rook("BLACK")  # Cambiado a BLACK
+        self.__positions__[7][7] = Rook("BLACK")  # Cambiado a BLACK
 
         # Caballos
-        self.__positions__[0][1] = Knight("BLACK")
-        self.__positions__[0][6] = Knight("BLACK")
-        self.__positions__[7][1] = Knight("WHITE")
-        self.__positions__[7][6] = Knight("WHITE")
+        self.__positions__[0][1] = Knight("WHITE")  # Cambiado a WHITE
+        self.__positions__[0][6] = Knight("WHITE")  # Cambiado a WHITE
+        self.__positions__[7][1] = Knight("BLACK")  # Cambiado a BLACK
+        self.__positions__[7][6] = Knight("BLACK")  # Cambiado a BLACK
 
         # Alfiles
-        self.__positions__[0][2] = Bishop("BLACK")
-        self.__positions__[0][5] = Bishop("BLACK")
-        self.__positions__[7][2] = Bishop("WHITE")
-        self.__positions__[7][5] = Bishop("WHITE")
+        self.__positions__[0][2] = Bishop("WHITE")  # Cambiado a WHITE
+        self.__positions__[0][5] = Bishop("WHITE")  # Cambiado a WHITE
+        self.__positions__[7][2] = Bishop("BLACK")  # Cambiado a BLACK
+        self.__positions__[7][5] = Bishop("BLACK")  # Cambiado a BLACK
 
         # Reyes y Reinas
-        self.__positions__[0][3] = Queen("BLACK")
-        self.__positions__[0][4] = King("BLACK")
-        self.__positions__[7][3] = Queen("WHITE")
-        self.__positions__[7][4] = King("WHITE")
+        self.__positions__[0][3] = Queen("WHITE")  # Cambiado a WHITE
+        self.__positions__[0][4] = King("WHITE")  # Cambiado a WHITE
+        self.__positions__[7][3] = Queen("BLACK")  # Cambiado a BLACK
+        self.__positions__[7][4] = King("BLACK")  # Cambiado a BLACK
 
         # Peones
         for col in range(8):
-            self.__positions__[1][col] = Pawn("BLACK")
-            self.__positions__[6][col] = Pawn("WHITE")
+            self.__positions__[1][col] = Pawn("WHITE")  # Cambiado a WHITE
+            self.__positions__[6][col] = Pawn("BLACK")  # Cambiado a BLACK
+           
 
     def __str__(self):
         """Devuelve una representación en cadena del tablero."""
@@ -78,7 +79,7 @@ class Board:
         piece = self.get_piece(from_row, from_col)
 
         # Verificar si el movimiento es válido según las reglas de la pieza
-        if not piece.valid_moves(from_row, from_col, to_row, to_col):
+        if not piece.valid_moves(from_row, from_col, to_row, to_col, self):
             raise InvalidMove("El movimiento no es válido para esta pieza")
 
         # Verificar si la posición de destino está vacía o contiene una pieza del oponente
@@ -93,3 +94,18 @@ class Board:
     def is_position_empty(self, row, col):
         """Verifica si una posición está vacía."""
         return self.__positions__[row][col] is None
+
+    def is_path_clear(self, from_row, from_col, to_row, to_col):
+        """Verifica si el camino entre dos posiciones está libre de piezas."""
+        row_step = 1 if to_row > from_row else -1 if to_row < from_row else 0
+        col_step = 1 if to_col > from_col else -1 if to_col < from_col else 0
+        
+        current_row, current_col = from_row + row_step, from_col + col_step
+        
+        while current_row != to_row or current_col != to_col:
+            if not self.is_position_empty(current_row, current_col):
+                return False
+            current_row += row_step
+            current_col += col_step
+
+        return True

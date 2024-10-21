@@ -1,6 +1,6 @@
 
 
-from execpciones import *
+from excepciones import *
 
 class ReglasDeMovimientos:
 
@@ -59,20 +59,58 @@ class ReglasDeMovimientos:
         col_diff = self.col_difference_move(from_col, to_col)
         if row_diff > 1 or col_diff > 1:
             raise InvalidMoveKing("El rey solo puede moverse una casilla en cualquier dirección")
-    
-    def queen_movement(self, from_row, from_col, to_row, to_col): 
+
+    def queen_movement(self, from_row, from_col, to_row, to_col):
         """Determina si el movimiento es válido para una reina (combinación de movimientos verticales, horizontales y diagonales)."""
+        
         try:
+            # Verifica el movimiento diagonal
             self.diagonal_move(from_row, from_col, to_row, to_col)
             return True
         except InvalidMoveDiagonal:
             pass  # Si no es diagonal, continúa verificando otros movimientos
 
         try:
+            # Verifica el movimiento vertical u horizontal
             self.vertical_horizontal_move(from_row, from_col, to_row, to_col)
             return True
         except InvalidMoveVerticalHorizontal:
             pass  # Si no es vertical ni horizontal, continúa con la verificación
 
         raise InvalidMoveQueen("La reina solo puede moverse en línea recta o en diagonal")
+
+
+    # def pawn_movement(self, from_row, from_col, to_row, to_col):
+    #     # Lógica para el movimiento del peón, como solo avanzar en la misma columna
+    #     if from_col != to_col:
+    #         raise InvalidMovePawn("El peón solo puede avanzar en la misma columna")
+        
+    #     # Movimiento de una casilla hacia adelante
+    #     if abs(from_row - to_row) == 1:
+    #         return True
+
+    #     # Movimiento inicial de dos casillas hacia adelante desde la posición de inicio
+    #     if abs(from_row - to_row) == 2 and (from_row == 1 or from_row == 6):
+    #         return True
+
+    #     raise InvalidMovePawn("El movimiento del peón no es válido.")
+
+    
+    def pawn_movement(self, from_row, from_col, to_row, to_col, color):
+        if color == "WHITE":
+            if from_row == 1:  # Primer movimiento
+                if to_row == from_row + 2 and to_col == from_col:
+                    return True  # Movimiento de dos casillas
+            if to_row == from_row + 1 and to_col == from_col:
+                return True  # Movimiento de una casilla
+
+        if color == "BLACK":
+            if from_row == 6:  # Primer movimiento
+                if to_row == from_row - 2 and to_col == from_col:
+                    return True  # Movimiento de dos casillas
+            if to_row == from_row - 1 and to_col == from_col:
+                return True  # Movimiento de una casilla
+
+        # Si llega aquí, el movimiento es inválido
+        raise InvalidMovePawn("Movimiento inválido para el peón")
 
