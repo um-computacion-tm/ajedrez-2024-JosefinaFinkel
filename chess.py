@@ -109,3 +109,6 @@ class Chess:
         """Devuelve una representación en cadena del estado del tablero"""
         return str(self.__board__)
     
+    def get_board(self):
+        """Devuelve el tablero"""
+        return self.__board__
