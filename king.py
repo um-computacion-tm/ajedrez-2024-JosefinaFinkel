@@ -70,16 +70,31 @@ from piece import PieceWithMovement
 #             return "♔" if self.get_color() == "WHITE" else "♚"
 
 
-from piece import PieceWithMovement
-from movimientos import ReglasDeMovimientos
+# from piece import PieceWithMovement
+# from movimientos import ReglasDeMovimientos
+
+# class King(PieceWithMovement):
+#     def __init__(self, color):
+#         super().__init__(color)
+#         self.movimientos = ReglasDeMovimientos()  # Inicializa las reglas de movimientos para el rey
+
+#     def valid_moves(self, from_row, from_col, to_row, to_col, board):
+#         return self.movimientos.king_movement(from_row, from_col, to_row, to_col)
+
+#     def __str__(self):
+#         return "♔" if self.get_color() == "WHITE" else "♚"
 
 class King(PieceWithMovement):
     def __init__(self, color):
         super().__init__(color)
-        self.movimientos = ReglasDeMovimientos()  # Inicializa las reglas de movimientos para el rey
+        self.movimientos = ReglasDeMovimientos()
 
     def valid_moves(self, from_row, from_col, to_row, to_col, board):
-        return self.movimientos.king_movement(from_row, from_col, to_row, to_col)
+        try:
+            self.movimientos.king_movement(from_row, from_col, to_row, to_col)
+            return True  # Movimiento válido
+        except Exception:  # Puedes ser más específico en las excepciones que atrapas
+            return False  # Movimiento no válido
 
     def __str__(self):
         return "♔" if self.get_color() == "WHITE" else "♚"
