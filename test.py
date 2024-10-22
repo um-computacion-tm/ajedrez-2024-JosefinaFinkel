@@ -156,7 +156,7 @@
 # if __name__ == '__main__':
 #     unittest.main()
 
-from unittest.mock import patch
+from unittest.mock import patch, MagicMock
 import unittest
 from rook import Rook
 from knight import Knight
@@ -307,6 +307,43 @@ class TestChessGame(unittest.TestCase):
         mock_play.return_value = False
         main()
         mock_play.assert_called_once()
+
+    @patch('builtins.input', side_effect=['0', '0', '1', '1'])  # Simulando entradas de usuario
+    @patch('chess.Chess.move', return_value=None)  # Mockea el método move de la clase Chess
+    def test_play_valid_move(self, mock_move, mock_input):
+        """Prueba un movimiento válido en la función play()"""
+        chess = MagicMock()  # Crea un mock para la clase Chess
+        chess.get_turn.return_value = "WHITE"  # Simula el turno
+        play(chess)
+
+    @patch('builtins.input', side_effect=['0', '0', '1', '1'])  # Entradas de usuario
+    @patch('chess.Chess.move', side_effect=InvalidMove("Movimiento inválido"))  # Simula un error en move
+    def test_play_invalid_move(self, mock_move, mock_input):
+        """Prueba manejo de movimiento inválido en la función play()"""
+        chess = MagicMock()
+        chess.get_turn.return_value = "WHITE"
+        with patch('builtins.print') as mock_print:
+            play(chess)
+            mock_print.assert_called_with('Turno: WHITE')
+
+    @patch('builtins.input', side_effect=['0', '0', '1', '1'])  # Entradas de usuario
+    @patch('chess.Chess.move', side_effect=NoPieceAtPosition("No hay pieza en la posición"))  # Simula un error en move
+    def test_play_no_piece_at_position(self, mock_move, mock_input):
+        """Prueba manejo de no hay pieza en la posición en la función play()"""
+        chess = MagicMock()
+        chess.get_turn.return_value = "WHITE"
+        with patch('builtins.print') as mock_print:
+            play(chess)
+            mock_print.assert_called_with('Turno: WHITE')
+
+    @patch('builtins.input', side_effect=['a', '0', '1', '1'])  # Simula una entrada no válida
+    def test_play_invalid_input(self, mock_input):
+        """Prueba manejo de entrada inválida"""
+        chess = MagicMock()
+        chess.get_turn.return_value = "WHITE"
+        with patch('builtins.print') as mock_print:
+            play(chess)
+            mock_print.assert_called_with("Por favor, ingrese coordenadas válidas (números enteros).")  # Verifica que el error se imprima
 
 
 if __name__ == '__main__':
