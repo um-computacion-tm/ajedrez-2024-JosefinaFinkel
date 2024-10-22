@@ -64,5 +64,5 @@ class PieceWithMovement(Piece):
         from movimientos import ReglasDeMovimientos
         self.movimientos = ReglasDeMovimientos()
 
-    def __str__(self):
-        return "♗" if self.get_color() == WHITE else "♝"
+    # def __str__(self):
+    #     return "♗" if self.get_color() == WHITE else "♝"

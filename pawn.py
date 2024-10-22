@@ -28,11 +28,11 @@
 #         # Devuelve el símbolo del peón según su color.
 #         return "♙" if self.get_color() == "WHITE" else "♟"
 
-from piece import Piece
+from piece import PieceWithMovement
 from movimientos import ReglasDeMovimientos
 from excepciones import InvalidMoveNotInBoard, InvalidMoveSameColor
 
-class Pawn(Piece):
+class Pawn(PieceWithMovement):
 
     def valid_moves(self, from_row, from_col, to_row, to_col, board):
         # 1. Verifica si la posición de destino está dentro del tablero
