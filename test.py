@@ -1,6 +1,5 @@
 
 
-
 import unittest
 from rook import Rook
 from knight import Knight
@@ -10,8 +9,9 @@ from king import King
 from pawn import Pawn
 from board import Board
 from chess import Chess
-from movimientos import ReglasDeMovimientos
-from excepciones import InvalidMove, InvalidTurn, NoPieceAtPosition, InvalidCoordinates, InvalidMovePawn, InvalidTurn, InvalidMoveDiagonal, InvalidMoveVerticalHorizontal
+from excepciones import InvalidMove, InvalidTurn, NoPieceAtPosition, InvalidCoordinates, InvalidMovePawn
+from ajedrez import play
+
 
 class TestChessGame(unittest.TestCase):
     
@@ -28,8 +28,15 @@ class TestChessGame(unittest.TestCase):
         """Verifica el cambio de turno"""
         self.chess.change_turn()
         self.assertEqual(self.chess.get_turn(), "BLACK")
+    
+    def test_invalid_turn(self):
+        """Prueba el manejo de turnos inválidos"""
+        self.chess.move(1, 0, 3, 0)  # Peón blanco avanza
+        self.assertEqual(self.chess.get_turn(), "BLACK")  # Verifica que el turno cambió
+        with self.assertRaises(InvalidTurn):
+            self.chess.move(1, 1, 3, 1)  # Intentar mover peón blanco en el turno negro
 
-    # Métodos para probar coordenadas inválidas
+    # Métodos para probar coordenadas invalidas
     def _test_raises_exception(self, exception_type, start, end):
         """Prueba que lance la excepción especificada al mover una pieza."""
         with self.assertRaises(exception_type):
@@ -65,7 +72,7 @@ class TestChessGame(unittest.TestCase):
             board.__positions__[0][col] = None  # Asegúrate de que estas posiciones estén vacías
         board.__positions__[0][0] = rook  # Coloca la torre en la posición inicial
 
-        # Ahora prueba el movimiento horizontal de la torre
+        #Movimiento horizontal de la torre
         self.assertTrue(rook.valid_moves(0, 0, 0, 5, board))  # Movimiento horizontal
 
     def test_valid_bishop_movement(self):
@@ -97,7 +104,7 @@ class TestChessGame(unittest.TestCase):
         """Prueba que lance excepción cuando no hay pieza en otra posición"""
         self._test_raises_exception(NoPieceAtPosition, (2, 2), (2, 3))
 
-    # Nuevos tests para peones
+    #Tests para peones
     def test_valid_pawn_movement_white(self):
         """Prueba movimientos válidos de peones blancos"""
         self.chess.move(1, 0, 3, 0)  # Primer movimiento de dos casillas
@@ -112,12 +119,21 @@ class TestChessGame(unittest.TestCase):
         with self.assertRaises(InvalidMovePawn):
             self.chess.move(1, 0, 2, 1)  # Intentar mover en diagonal sin captura
 
-    def test_invalid_turn(self):
-        """Prueba el manejo de turnos inválidos"""
-        self.chess.move(1, 0, 3, 0)  # Peón blanco avanza
-        self.assertEqual(self.chess.get_turn(), "BLACK")  # Verifica que el turno cambió
-        with self.assertRaises(InvalidTurn):
-            self.chess.move(1, 1, 3, 1)  # Intentar mover peón blanco en el turno negro
+    # Test para ajedrez.py
+    def test_play_valid_move(self, mock_input):
+            """Prueba que un movimiento válido se realice correctamente en ajedrez.py"""
+            chess = Chess()
+            play(chess)  # Simula una jugada en el juego
+            self.assertEqual(chess.get_board().__positions__[1][0], chess.get_board().__positions__[0][0])  # Verifica que el peón se haya movido
+
+        
+    def test_play_invalid_coordinates(self, mock_input):
+            """Prueba que se manejen correctamente las coordenadas inválidas en ajedrez.py"""
+            chess = Chess()
+            with self.assertRaises(InvalidCoordinates):
+                play(chess)  # Intentar mover con coordenadas fuera de rango
+
+
 
 if __name__ == '__main__':
     unittest.main()
