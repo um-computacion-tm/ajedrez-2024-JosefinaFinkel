@@ -32,10 +32,6 @@ from excepciones import InvalidMove
 
 class Bishop(Piece):
     
-    def __init__(self, color):
-        super().__init__(color)
-        self.movimientos = ReglasDeMovimientos()  # Usar el nuevo enfoque para movimientos
-    
     def __str__(self):
         return "♗" if self.get_color() == "WHITE" else "♝"
 

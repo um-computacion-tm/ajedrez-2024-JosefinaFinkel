@@ -33,12 +33,6 @@ from excepciones import InvalidMove
 
 class Rook(Piece):
     
-    def __init__(self, color):
-        super().__init__(color)
-        self.movimientos = ReglasDeMovimientos()
-
-   
-   
     def valid_moves(self, from_row, from_col, to_row, to_col, board):
         if from_row != to_row and from_col != to_col:
             raise InvalidMoveVerticalHorizontal("El movimiento no es vertical u horizontal.")
@@ -47,8 +41,6 @@ class Rook(Piece):
             raise InvalidMoveVerticalHorizontal("El camino no está despejado.")
         
         return True  # Si todo es válido
-
-
 
     def __str__(self):
         return "♖" if self.get_color() == "WHITE" else "♜"

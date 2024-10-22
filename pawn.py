@@ -33,10 +33,6 @@ from movimientos import ReglasDeMovimientos
 from excepciones import InvalidMoveNotInBoard, InvalidMoveSameColor
 
 class Pawn(Piece):
-    
-    def __init__(self, color):
-        super().__init__(color)
-        self.movimientos = ReglasDeMovimientos()
 
     def valid_moves(self, from_row, from_col, to_row, to_col, board):
         # 1. Verifica si la posición de destino está dentro del tablero
