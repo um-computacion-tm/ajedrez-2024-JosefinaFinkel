@@ -28,23 +28,6 @@ def play(chess):
         print("Por favor, ingrese coordenadas válidas (números enteros).")
 
 
-# Test para ajedrez.py
-def test_play_valid_move(self, mock_input):
-        """Prueba que un movimiento válido se realice correctamente en ajedrez.py"""
-        chess = Chess()
-        play(chess)  # Simula una jugada en el juego
-        self.assertEqual(chess.get_board().__positions__[1][0], chess.get_board().__positions__[0][0])  # Verifica que el peón se haya movido
-
-    
-def test_play_invalid_coordinates(self, mock_input):
-        """Prueba que se manejen correctamente las coordenadas inválidas en ajedrez.py"""
-        chess = Chess()
-        with self.assertRaises(InvalidCoordinates):
-            play(chess)  # Intentar mover con coordenadas fuera de rango
-
-
-
-
 if __name__ == '__main__':
     main()
 
