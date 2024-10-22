@@ -156,7 +156,7 @@
 # if __name__ == '__main__':
 #     unittest.main()
 
-
+from unittest.mock import patch
 import unittest
 from rook import Rook
 from knight import Knight
@@ -166,6 +166,7 @@ from king import King
 from pawn import Pawn
 from board import Board
 from chess import Chess
+from ajedrez import *
 from excepciones import InvalidMove, InvalidTurn, NoPieceAtPosition, InvalidCoordinates, InvalidMovePawn, InvalidMoveDestination, InvalidMoveDiagonal, InvalidMoveVerticalHorizontal, InvalidMovePathOcuppied
 
 
@@ -300,6 +301,13 @@ class TestChessGame(unittest.TestCase):
         self.chess.__turn__ = 'WHITE'
         with self.assertRaises(InvalidMove):
             self.chess.move(0, 1, 3, 0)  # Intenta mover caballo a una posición ocupada por el peón blanco
+    
+    @patch('ajedrez.play')
+    def test_start(self, mock_play):
+        mock_play.return_value = False
+        main()
+        mock_play.assert_called_once()
+
 
 if __name__ == '__main__':
     unittest.main()

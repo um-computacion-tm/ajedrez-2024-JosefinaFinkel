@@ -1,11 +1,11 @@
-
 from chess import Chess
 from excepciones import InvalidMove, InvalidTurn, InvalidCoordinates, NoPieceAtPosition, InvalidMoveDestination
 
 def main():
+    is_playing = True
     chess = Chess()
-    while True:
-        play(chess)
+    while is_playing:
+        is_playing = play(chess)
 
 def play(chess):
     try:
