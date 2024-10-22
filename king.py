@@ -24,8 +24,6 @@ from piece import PieceWithMovement
 from piece import PieceWithMovement
 
 class King(PieceWithMovement):
-    def __init__(self, color):
-        super().__init__(color)
 
     def valid_moves(self, from_row, from_col, to_row, to_col, board):
         try:

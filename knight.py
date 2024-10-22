@@ -23,8 +23,6 @@ from movimientos import ReglasDeMovimientos
 from piece import PieceWithMovement
 
 class Knight(PieceWithMovement):
-    def __init__(self, color):
-        super().__init__(color)
 
     def valid_moves(self, from_row, from_col, to_row, to_col, board):
         try:
